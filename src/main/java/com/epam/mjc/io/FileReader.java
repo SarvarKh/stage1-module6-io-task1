@@ -1,29 +1,29 @@
 package com.epam.mjc.io;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 
 public class FileReader {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         FileReader fileReader = new FileReader();
         File file = new File("src/main/resources/Profile.txt");
         fileReader.getDataFromFile(file);
+    }
 
-        java.io.FileReader inputStream = null;
+    public Profile getDataFromFile(File file) {
         String stringContentOfFile = "";
 
-        try {
-            inputStream = new java.io.FileReader("src/main/resources/Profile.txt");
-
+        try(java.io.FileReader inputStream = new java.io.FileReader(file.getPath());) {
             int c;
             while ((c = inputStream.read()) != -1) {
                 stringContentOfFile += Character.toString((char) c);
             }
-        } finally {
-            if (inputStream != null) {
-                inputStream.close();
-            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
         String[] parsedArg = new String[4];
@@ -39,9 +39,6 @@ public class FileReader {
                 parsedArg[2],
                 Long.parseLong(parsedArg[3]));
         System.out.println(profile);
-    }
-
-    public Profile getDataFromFile(File file) {
-        return new Profile();
+        return profile;
     }
 }
