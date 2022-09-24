@@ -21,9 +21,9 @@ public class FileReader {
                 stringContentOfFile += Character.toString((char) c);
             }
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            System.err.print(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.err.print(e);
         }
 
         String[] parsedArg = new String[4];
