@@ -13,18 +13,17 @@ public class FileReader {
     }
 
     public Profile getDataFromFile(File file) {
-        String stringContentOfFile = "";
+        StringBuilder bld = new StringBuilder();
 
         try(java.io.FileReader inputStream = new java.io.FileReader(file.getPath());) {
             int c;
             while ((c = inputStream.read()) != -1) {
-                stringContentOfFile += Character.toString((char) c);
+                bld.append(Character.toString((char) c));
             }
-        } catch (FileNotFoundException e) {
-            System.err.print(e);
         } catch (IOException e) {
             System.err.print(e);
         }
+        String stringContentOfFile = bld.toString();
 
         String[] parsedArg = new String[4];
         String[] keyVals = stringContentOfFile.split("\n");
